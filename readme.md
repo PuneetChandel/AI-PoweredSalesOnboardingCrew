@@ -4,6 +4,8 @@ An end-to-end automated sales onboarding workflow built using the crewAI agentic
 
 This system uses specialized AI agents to handle lead research, enrichment, scoring, CRM setup, billing, scheduling, logging, and notifications — all orchestrated in a structured, modular flow.
 
+![crew.png](crew.png)
+
 ---
 
 ## Features
