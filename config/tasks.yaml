@@ -1,0 +1,132 @@
+research_task:
+  description: >
+    Given the following sales lead:
+    - Name: {name}
+    - Email: {email}
+    - Address: {address}
+    - Phone: {phone}
+    - Website: {website}
+    Use web research to enrich this lead. Ensure all fields are filled if available online.
+
+  expected_output: >
+    Return ONLY a valid JSON object that exactly matches this structure. Do not include any explanation, text, or markdown.
+    {
+      "name": "xyz, Inc.",
+      "email": "support@xyz.com",
+      "phone": "123-456-7890",
+      "website": "https://xyz.com",
+      "address": "San Francisco, CA, USA",
+      "industry": "Financial Services",
+      "number_of_employees": 8000,
+      "annual_revenue": "$2B",
+      "decision_makers": [      ],
+      "recent_news": ["Acquired az"],
+      "funding_stage": "Private",
+      "ipo_status": "Not public",
+      "source_links": [
+      ]
+    }
+
+
+
+lead_scoring_task:
+  description: >
+    Score the lead based on this research data: {research_task.output}
+
+    Scoring logic:
+    - +25 points for companies with >100 employees
+    - +25 points if revenue > $10M
+    - +10 points if they are in a matching industry (e.g., SaaS, Fintech, IT Services)
+    - +10 points if recent funding or IPO news is found
+    - +10 points if at least 2 decision makers are found
+    - +10 points if the website and phone number are valid
+    - Deduct points if data is missing or indicates low activity
+
+    Return a final score (1-100) and a short rationale.
+
+  expected_output: >
+    {
+      "score": 0,
+      "rationale": "Short explanation of how the score was determined."
+    }
+    
+
+create_salesforce_account_task:
+  description: >
+    Use the Salesforce Tool for account creation.
+    The input is the output from the research_task.
+  expected_output: >
+    JSON object with account_id, created_at, and all fields mapped to a Salesforce account.
+
+
+schedule_meeting_task:
+  description: >
+    Use the Calendly Link Generator Tool to generate a link with the following data:
+    {research_task.output}
+    Use the lead's name and email to create a personalized Calendly link.
+  expected_output: >
+    A personalized Calendly link to send to the lead.
+    {
+      "calendly_link": "<Generated Calendly Link>"
+    }
+
+
+create_stripe_customer_task:
+  description: >
+    Use the Stripe tool to create a customer using the lead data: {research_task.output}.
+    Then generate a link they can use to add their bank details.
+  expected_output: >
+    JSON with Stripe customer_id and a link for the lead to enter their bank details.
+    {
+      "customer_id": "<Stripe Customer ID>",
+      "card_setup_link": "<Link for bank details setup>"
+    }
+
+final_summary_task:
+  description: >
+    Consolidate all information from the previous steps into one JSON object.
+
+    Include:
+    - The enriched lead data from `research_task`
+    - The Salesforce account ID from `create_salesforce_account_task`
+    - The Calendly link from `schedule_meeting_task`
+    - The Stripe customer ID and bank details link from `create_stripe_customer_task`
+
+  expected_output: >
+    A final consolidated JSON with all onboarding steps combined
+    {
+      "lead": {
+        "name": "",
+        "website": "",
+        "industry": "",
+        "phone": "",
+        "email": "",
+        "address": ""
+      },
+        "research_data": {
+            "number_of_employees": "...",
+            "annual_revenue": "...",
+            "decision_makers": [
+            {"name": "...", "role": "...", "linkedin": "..."}
+            ],
+            "recent_news": ["..."],
+            "funding_stage": "...",
+            "ipo_status": "...",
+            "source_links": ["..."]
+        },
+        "lead_score": {
+            "score": 0,
+            "rationale": "..."
+        },
+      "salesforce_account": {
+        "account_id": "...",
+        "created_at": "..."
+      },
+      "calendly_link": "...",
+       "stripe_customer": {
+            "customer_id": "...",
+            "card_setup_link": "..."
+        }
+    }
+    
+
