@@ -10,7 +10,7 @@ class SalesforceAPITool(BaseTool):
     description: str = "Creates a Salesforce account record from lead instructions"
 
     def _run(self, input: dict) -> dict:
-        print("🔍 Salesforce Tool received raw input:", input)
+        print("Salesforce Tool received raw input:", input)
 
         if isinstance(input, str):
             try:

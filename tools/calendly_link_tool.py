@@ -8,7 +8,7 @@ class CalendlyLinkGeneratorTool(BaseTool):
     description: str = "Generates a personalized Calendly link with pre-filled email and name"
 
     def _run(self, input: dict) -> dict:
-        print("🔍 Calendly Tool received raw input:", input)
+        print("Calendly Tool received raw input:", input)
 
         if isinstance(input, str):
             try:

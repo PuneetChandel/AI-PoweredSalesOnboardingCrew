@@ -10,7 +10,7 @@ class StripeCustomerTool(BaseTool):
     description: str = "Creates a Stripe customer and generates a Checkout link to collect card details"
 
     def _run(self, input: dict) -> dict:
-        print("🔍 Stripe Tool received raw input:", input)
+        print("Stripe Tool received raw input:", input)
 
         if isinstance(input, str):
             try:
