@@ -11,16 +11,18 @@ research_task:
   expected_output: >
     Return ONLY a valid JSON object that exactly matches this structure. Do not include any explanation, text, or markdown.
     {
-      "name": "xyz, Inc.",
-      "email": "support@xyz.com",
+      "name": "XYZ, Inc.",
+      "email": "XYZ@stripe.com",
       "phone": "123-456-7890",
-      "website": "https://xyz.com",
+      "website": "https://XYZ.com",
       "address": "San Francisco, CA, USA",
       "industry": "Financial Services",
       "number_of_employees": 8000,
       "annual_revenue": "$2B",
-      "decision_makers": [      ],
-      "recent_news": ["Acquired az"],
+      "decision_makers": [
+        {"name": "XYX", "role": "CEO", "linkedin": "https://linkedin.com/in/xyz"}
+      ],
+      "recent_news": [],
       "funding_stage": "Private",
       "ipo_status": "Not public",
       "source_links": [
@@ -28,33 +30,21 @@ research_task:
     }
 
 
-
 lead_scoring_task:
   description: >
-    Score the lead based on this research data: {research_task.output}
+    Use the scoring criteria from the provided file to evaluate the lead data: {normalize_research_output_task.output}
 
-    Scoring logic:
-    - +25 points for companies with >100 employees
-    - +25 points if revenue > $10M
-    - +10 points if they are in a matching industry (e.g., SaaS, Fintech, IT Services)
-    - +10 points if recent funding or IPO news is found
-    - +10 points if at least 2 decision makers are found
-    - +10 points if the website and phone number are valid
-    - Deduct points if data is missing or indicates low activity
-
-    Return a final score (1-100) and a short rationale.
-
+    You can use the FileReadTool to fetch the latest scoring rules from "instructions/scoring_rules.txt".
   expected_output: >
     {
       "score": 0,
       "rationale": "Short explanation of how the score was determined."
     }
-    
+
 
 create_salesforce_account_task:
   description: >
-    Use the Salesforce Tool for account creation.
-    The input is the output from the research_task.
+    Use the Salesforce Tool for account creation using using the lead data: {normalize_research_output_task.output}.
   expected_output: >
     JSON object with account_id, created_at, and all fields mapped to a Salesforce account.
 
@@ -73,7 +63,7 @@ schedule_meeting_task:
 
 create_stripe_customer_task:
   description: >
-    Use the Stripe tool to create a customer using the lead data: {research_task.output}.
+    Use the Stripe tool to create a customer using the lead data: {normalize_research_output_task.output}.
     Then generate a link they can use to add their bank details.
   expected_output: >
     JSON with Stripe customer_id and a link for the lead to enter their bank details.

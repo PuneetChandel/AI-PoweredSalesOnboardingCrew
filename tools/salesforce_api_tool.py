@@ -7,7 +7,7 @@ import json
 
 class SalesforceAPITool(BaseTool):
     name: str = "Salesforce Account Creator"
-    description: str = "Creates a Salesforce account record from lead data"
+    description: str = "Creates a Salesforce account record from lead instructions"
 
     def _run(self, input: dict) -> dict:
         print("🔍 Salesforce Tool received raw input:", input)

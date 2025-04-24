@@ -1,7 +1,7 @@
 # crew.py
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, task, crew
-from crewai_tools import SerperDevTool, ScrapeWebsiteTool
+from crewai_tools import SerperDevTool, ScrapeWebsiteTool, FileReadTool
 from tools.salesforce_api_tool import SalesforceAPITool
 from tools.calendly_link_tool import CalendlyLinkGeneratorTool
 from tools.snowflake_logger_tool import SnowflakeLoggerTool
@@ -39,7 +39,7 @@ class SalesOnboardingCrew():
             config={
                 "role": "Lead Data Normalizer",
                 "goal": "Convert raw LLM output into structured, valid Lead JSON.",
-                "backstory": "You ensure lead data conforms exactly to a known structure using JSON. You remove summaries and unnecessary nesting."
+                "backstory": "You ensure lead instructions conforms exactly to a known structure using JSON. You remove summaries and unnecessary nesting."
             },
             tools=[],  # No tools needed
             verbose=True,
@@ -50,7 +50,7 @@ class SalesOnboardingCrew():
     def lead_scoring_agent(self) -> Agent:
         return Agent(
             config=self.agents_config['lead_scoring_agent'],
-            tools=[],
+            tools=[FileReadTool(file_path='instructions/scoring_rules.txt')],
             verbose=True,
             memory=False,)
 

@@ -34,9 +34,6 @@ class SnowflakeLoggerTool(BaseTool):
             except Exception:
                 return {"status": "error", "error": "Payload is not valid JSON"}
 
-        print("📦 Step:", step)
-        print("📥 Payload to Snowflake:", payload)
-
         try:
             conn = snowflake.connector.connect(
                 user=os.getenv("SNOWFLAKE_USER"),

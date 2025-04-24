@@ -1,0 +1,11 @@
+Lead Scoring Criteria:
+
++25 points if the company has more than 100 employees
++25 points if annual revenue is greater than $10M
++10 points if the company is in a matching industry (SaaS, Fintech, IT Services)
++10 points if recent funding or IPO news is present
++10 points if at least 2 decision makers are listed
++10 points if both website and phone number are valid
+-10 points or more if key data is missing or indicates low activity
+
+Final score: 1–100
