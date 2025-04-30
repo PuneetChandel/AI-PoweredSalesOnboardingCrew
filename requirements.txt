@@ -3,7 +3,7 @@ crewai_tools==0.40.1
 pydantic==2.11.3
 python-dotenv==1.1.0
 PyYAML==6.0.2
-PyYAML==6.0.2
 simple_salesforce==1.12.6
 snowflake_connector_python==3.14.1
 stripe==12.0.1
+streamlit==1.32.0
